@@ -1,0 +1,84 @@
+{
+    "name": "cyverse-file-download",
+    "version": "0.0.1",
+    "shortDescription": "Put web-accessible files into the Cyverse Data Store",
+    "longDescription": "",
+    "available": true,
+    "checkpointable": false,
+    "defaultMemoryPerNode": 32,
+    "defaultProcessorsPerNode": 16,
+    "defaultMaxRunTime": "12:00:00",
+    "defaultNodeCount": 1,
+    "defaultQueue": "normal",
+    "deploymentPath": "kyclark/applications/cyverse-file-download-0.0.1/stampede",
+    "deploymentSystem": "data.iplantcollaborative.org",
+    "executionSystem": "tacc-stampede2-kyclark",
+    "executionType": "HPC",
+    "helpURI": "http://www.hurwitzlab.org",
+    "label": "Cyverse File Download",
+    "parallelism": "serial",
+    "templatePath": "template.sh",
+    "testPath": "test.sh",
+    "modules": [
+        "launcher"
+    ],
+    "tags": [
+        "imicrobe",
+        "cyverse"
+    ],
+    "ontology": [
+        "http://sswapmeet.sswap.info/agave/apps/Application"
+    ],
+    "inputs": [
+        {
+            "id": "FILES_LIST",
+            "value": {
+                "default": "",
+                "order": 1,
+                "validator": "",
+                "required": true,
+                "visible": true,
+                "enquote": false
+            },
+            "semantics": {
+                "ontology": [
+                    "http://sswapmeet.sswap.info/mime/application/X-bam"
+                ],
+                "minCardinality": 1,
+                "maxCardinality": -1,
+                "fileTypes": [
+                    "raw-0"
+                ]
+            },
+            "details": {
+                "description": "A file listing the web locations (http, ftp) of the files you want",
+                "label": "Files list",
+                "argument": "-f ",
+                "repeatArgument": false,
+                "showArgument": true
+            }
+        }
+    ],
+    "parameters": [
+        {
+            "id": "DEST_DIR",
+            "value": {
+                "default": "downloads",
+                "type": "string",
+                "order": 1,
+                "required": true,
+                "visible": true,
+                "enquote": false,
+                "validator": ""
+            },
+            "details": {
+                "description": "The Cyverse Data Store directory where the files will go",
+                "label": "Destination",
+                "argument": "-d ",
+                "repeatArgument": false,
+                "showArgument": true
+            }
+        }
+    ],
+    "outputs": []
+}
