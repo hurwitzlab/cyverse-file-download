@@ -76,6 +76,25 @@
                 "repeatArgument": false,
                 "showArgument": true
             }
+        },
+        {
+            "id": "UNCOMPRESS",
+            "value": {
+                "default": true,
+                "type": "flag",
+                "order": 2,
+                "required": true,
+                "visible": true,
+                "enquote": false,
+                "validator": ""
+            },
+            "details": {
+                "description": "Use (g|b)?zip to uncompress files.",
+                "label": "Uncompress",
+                "argument": "-z",
+                "repeatArgument": false,
+                "showArgument": true
+            }
         }
     ],
     "outputs": []
