@@ -19,9 +19,7 @@
     "parallelism": "serial",
     "templatePath": "template.sh",
     "testPath": "test.sh",
-    "modules": [
-        "launcher"
-    ],
+    "modules": [],
     "tags": [
         "imicrobe",
         "cyverse"
@@ -45,7 +43,7 @@
                     "http://sswapmeet.sswap.info/mime/application/X-bam"
                 ],
                 "minCardinality": 1,
-                "maxCardinality": -1,
+                "maxCardinality": 1,
                 "fileTypes": [
                     "raw-0"
                 ]
