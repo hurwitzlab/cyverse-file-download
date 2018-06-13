@@ -5,21 +5,21 @@
 #SBATCH -t 24:00:00
 #SBATCH -N 1
 #SBATCH -n 1
-#SBATCH -J cyvrsup
+#SBATCH -J cyvrsdl
 
-module load launcher
+module load launcher/3.2
 
 set -u
 
 FILES_LIST=""
 DEST_DIR=""
+UNCOMPRESS=0
 PARAMRUN="$TACC_LAUNCHER_DIR/paramrun"
 
 export LAUNCHER_PLUGIN_DIR="$TACC_LAUNCHER_DIR/plugins"
 export LAUNCHER_WORKDIR="$PWD"
 export LAUNCHER_RMI="SLURM"
 export LAUNCHER_SCHED="interleaved"
-
 
 function lc() {
     FILE=$1
@@ -34,18 +34,23 @@ function USAGE() {
     echo " -d DEST_DIR"
     echo " -f FILES_LIST"
     echo
+    echo "Options:"
+    echo " -z (UNCOMPRESS default $UNCOMPRESS)"
     exit "${1:-0}"
 }
 
 [[ $# -eq 0 ]] && USAGE 1
 
-while getopts :d:f:h OPT; do
+while getopts :d:f:zh OPT; do
     case $OPT in
         d)
             DEST_DIR="$OPTARG"
             ;;
         f)
             FILES_LIST="$OPTARG"
+            ;;
+        z)
+            UNCOMPRESS=1
             ;;
         h)
             USAGE
@@ -84,11 +89,18 @@ while read -r FILE; do
     i=$((i+1))
     BASENAME=$(basename "$FILE")
     printf "%3d: %s\\n" $i "$BASENAME"
-    echo "get.sh $FILE $DEST_DIR" >> "$PARAM"
+    echo "sh $PWD/get.sh $FILE $DEST_DIR $UNCOMPRESS" >> "$PARAM"
 done < "$FILES_LIST"
 
 NJOBS=$(lc "$PARAM")
-echo "Starting NJOBS \"$NJOBS\" $(date)"
+
+if [[ $NJOBS -lt 1 ]]; then
+    echo "No files to get!"
+    exit 1
+fi
+
+echo "Will download \"$NJOBS\" to \"$DEST_DIR\""
+
 LAUNCHER_JOB_FILE="$PARAM"
 
 if [[ $NJOBS -gt 16 ]]; then
