@@ -1,4 +1,4 @@
-APP = cyverse-file-download-0.0.1
+APP = cyverse-file-download-0.0.2
 EMAIL = kyclark@email.arizona.edu
 
 clean:
